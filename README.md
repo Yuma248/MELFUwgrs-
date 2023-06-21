@@ -38,7 +38,7 @@ For SNAP
 
     make  
 
-Then copy snap-aligment to your path or incluide snap folder in your $PATH 
+Then copy snap-aligment to your path or include snap folder in your $PATH 
 
 
 # Basic usage:
@@ -47,14 +47,24 @@ Then copy snap-aligment to your path or incluide snap folder in your $PATH
 Usage:
 
 MELFUwgrs.pl 
-        -stp <You need at least determine what steps you want to run> 
+        -stp <You need at least determine what steps you want to run>
+        
                 indref: <Indexs the reference genome with samtools, picard, bowtie2 and snap> 
+                
                 trim: <It will use AdapterRemoval to trim and filter reads> 
+                
                 concat: <It will concatenate fastq files of the same sample but different runs in one file> 
+                
                 alignment: <It will use bowtie2, bwa or snap to align reads to a reference genome> 
+                
                 dedup: <This step will sort sam/bam files, convert sam to bam (if necessary) and mask duplicates> 
+                
                 indelrea: <This step will locally realign indels, although this is not recommended any more> 
+                
                 bedmarkrep: <This step will mask repeat regions in the genome> 
+                
                 snpcalling: <This step will use ANGSD to simultaneously call and genotype SNP> 
+                
                 filtering: <This step will use vcftools to filter SNPs, I recommend to use this automatically to have an idea of your data, but play whit the parameters if you have the time> 
+                
 
