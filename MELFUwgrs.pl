@@ -1,4 +1,4 @@
-#!~/miniconda3/envs/SNPcallPipeY/bin/perl -w
+#!/usr/bin/perl -w
 while (@ARGV){
 	$_=shift @ARGV;
 	if ($_=~ /^-stp$/){$stp=shift @ARGV;}
