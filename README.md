@@ -28,12 +28,21 @@ ANGSD
 
 The easiest way to install the dependencies is using conda 
 
-conda create --name SNPcallPipe -c conda-forge -c bioconda perl-parallel-loops parallel stacks adapterremoval bowtie2 bwa samtools bcftools vcftools angsd
+conda create --name MELFUwgrs -c conda-forge -c bioconda perl-parallel-loops parallel stacks adapterremoval bowtie2 bwa samtools bcftools vcftools angsd
+
+For SNAP 
+
+    git clone https://github.com/amplab/snap.git 
+
+    cd snap 
+
+    make  
+
+Then copy snap-aligment to your path or incluide snap folder in your $PATH 
 
 
 # Basic usage:
 
-Usage:
 
 Usage:
 
