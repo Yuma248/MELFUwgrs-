@@ -28,7 +28,7 @@ ANGSD
 
 The easiest way to install the dependencies is using conda 
 
-conda create --name MELFUwgrs -c conda-forge -c bioconda perl-parallel-loops parallel stacks adapterremoval bowtie2 bwa samtools bcftools vcftools angsd
+conda create --name MELFUwgrs -c conda-forge -c bioconda perl-parallel-loops parallel stacks adapterremoval bowtie2 dragmap bwa samtools bcftools vcftools angsd
 
 For SNAP 
 
