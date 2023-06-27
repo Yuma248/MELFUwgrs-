@@ -50,6 +50,7 @@ elsif ($type eq "NO"){
                 print "$cmd\n";
                 `parallel -j $snc --results $tmpdir --tmp $tmpdir zcat $inputfolder\/{1}_$ef\.fq.gz \'|\' gzip \'>\'\'>\' $outputfolder/{1}\.$ef\.fq.gz ::: @nms`
                 }
+}
 else {print "You have to select a correct type of file, check the instrcutions\n"}
 
 
