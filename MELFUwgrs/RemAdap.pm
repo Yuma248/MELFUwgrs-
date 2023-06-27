@@ -46,6 +46,7 @@ print "$cmd\n\n";
 }
 }
 else {
+my @cod=split /\,/, $exf;
 my @names=`ls -d $inf/*/`;
 
 foreach $name (@names){chomp $name; $name=~ s/$inf\///g; $name=~ s/\///g; push (@nms, $name);  
