@@ -42,13 +42,14 @@ elsif ($type eq "TR"){
         `parallel -j $snc --results $tmpdir --tmp $tmpdir zcat $inputfolder\/{1}*\.gz \'|\' gzip \'>\'\'>\' $outputfolder/{1}\.gz ::: @nms`
 }
 elsif ($type eq "NO"){
-        my $code = $exf.".gz";
+	our @exts = split(/,/, $exf);
+        my $code = $exts[0];
         my @names = `ls $inputfolder\/\*$code`;
         foreach $name (@names) {chomp $name; $name=~ s/$inputfolder\///g; $name=~ s/$code//g; push (@nms, $name);}
-	foreach $ef ( "1", "2"){
-                my $cmd = "parallel -j $snc --results $tmpdir --tmp $tmpdir zcat $inputfolder\/{1}_$ef\.fq.gz | gzip \'>>\' $outputfolder/{1}\.$ef\fq.gz ::: @nms";
+	foreach $ef ( @exts){
+                my $cmd = "parallel -j $snc --results $tmpdir --tmp $tmpdir zcat $inputfolder\/{1}$ef | gzip \'>>\' $outputfolder/{1}\.$ef\fq.gz ::: @nms";
                 print "$cmd\n";
-                `parallel -j $snc --results $tmpdir --tmp $tmpdir zcat $inputfolder\/{1}_$ef\.fq.gz \'|\' gzip \'>\'\'>\' $outputfolder/{1}\.$ef\.fq.gz ::: @nms`
+                `parallel -j $snc --results $tmpdir --tmp $tmpdir zcat $inputfolder\/{1}$ef'|\' gzip \'>\'\'>\' $outputfolder/{1}\.$ef\.fq.gz ::: @nms`
                 }
 }
 else {print "You have to select a correct type of file, check the instrcutions\n"}
