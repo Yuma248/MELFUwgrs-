@@ -40,7 +40,7 @@ print "$cmd\n\n";
 ### yuma
 }
 elsif ((scalar (@cod)) == 2){
-my $cmd="`parallel -j $nc --results $tmpdir --tmp $tmpdir AdapterRemoval --file1 $inf/{1}$cod[0] --file2 $inf/{1}$cod[1] --basename $outf/{1} --minlength 70 --trimns --trimqualities --collapse --gzip ::: @nms";
+my $cmd="parallel -j $nc --results $tmpdir --tmp $tmpdir AdapterRemoval --file1 $inf/{1}$cod[0] --file2 $inf/{1}$cod[1] --basename $outf/{1} --minlength 70 --trimns --trimqualities --collapse --gzip ::: @nms";
 print "$cmd\n\n";
 `parallel -j $nc --results $tmpdir --tmpdir $tmpdir AdapterRemoval --file1 $inf/{1}$cod[0] --file2 $inf/{1}$cod[1] --basename $outf/{1} --minlength 70 --trimns --trimqualities --collapse --gzip ::: @nms`;
 }
@@ -55,7 +55,7 @@ foreach $name (@names){chomp $name; $name=~ s/$inf\///g; $name=~ s/\///g; push (
 	else {`cat $inf\/$name\/$name\_\*_1.fq.gz \>\> $inf\/$name\/$name\_1.fq.gz`; `cat $inf\/$name\/$name\_\*_2.fq.gz \>\> $inf\/$name\/$name\_2.fq.gz`;}
 }
 
-my $cmd="`parallel -j $nc --results $tmpdir --tmp $tmpdir AdapterRemoval --file1 $inf/{1}/{1}$cod[0] --file2 $inf/{1}$cod[1] --basename $outf/{1} --minlength 70 --trimns --trimqualities --collapse --gzip ::: @nms";
+my $cmd="parallel -j $nc --results $tmpdir --tmp $tmpdir AdapterRemoval --file1 $inf/{1}/{1}$cod[0] --file2 $inf/{1}$cod[1] --basename $outf/{1} --minlength 70 --trimns --trimqualities --collapse --gzip ::: @nms";
 print "$cmd\n\n";
 `parallel -j $nc --results $tmpdir --tmpdir $tmpdir AdapterRemoval --file1 $inf/{1}/{1}$cod[0] --file2 $inf/{1}/{1}$cod[1] --basename $outf/{1} --minlength 70 --trimns --trimqualities --collapse --gzip ::: @nms`;
 }
