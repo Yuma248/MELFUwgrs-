@@ -25,6 +25,7 @@ $OUTSNAP ="$inputfolder\/$orgn\_SNAP";
 `java -Xmx4096m -jar $pf\/picard.jar CreateSequenceDictionary R=$inputfolder\/$orgn\.fna O=$inputfolder\/$orgn.dict`;
 `bowtie2-build  $inputfolder\/$orgn\.fna $inputfolder\/$orgn\.fna`;
 `bwa index $inputfolder\/$orgn\.fna $inputfolder\/$orgn\.fna`;
+`snap-aligner index $inputfolder\/$orgn\.fna $OUTSNAP`;
 `dragen-os --build-hash-table true --ht-reference $inputfolder\/$orgn\.fna --output-directory $OUTSNAP`;
 #makeblastdb -in test.fsa -dbtype nucl
 
