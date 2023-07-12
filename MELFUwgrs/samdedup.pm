@@ -26,14 +26,20 @@ if ( !-d $ofn ){`mkdir $ofn`;}
 if (not defined ($nc)){$nc=4;}
 if (not defined ($ncp)){$ncp=1;}
 our $nct=$nc + $ncp;
-my @names=`ls $inf/*.sam | sed 's/.sam//g'`;
+my $ext=`ls $inf/*.{sam,bam} | head -n 1 | awk -F'.' '{print $NF}'`;
+my @names=`ls $inf/*.{sam,bam} | sed 's/.sam//g' | sed 's/.bam//g`;
 foreach $name (@names){chomp $name; $name=~ s/$inf\///g; push (@nms, $name);}
 my $cmd="parallel -j $nc samtools view -bS $inf/{1}.sam \'\|\' samtools sort -n -\@ $ncp -o @$names/{1}_namesort.bam - ::: @nms";
 my $cmd2="parallel -j $nc samtools fixmate -m $names/{1}_namesort.bam $fix/{1}_fixmate.bam ::: @nms";
 my $cmd3="parallel -j $nc samtools sort -\@ $ncp -o $coor/{1}_positionsort.bam $fix/{1}_fixmate.bam ::: @nms";
 my $cmd4="parallel -j $nc samtools markdup -r -s $coor/{1}_positionsort.bam $ddp/{1}_markdup.bam \'\>\' $tmpdir/{1}_log ::: @nms";
 print "$cmd\n\n$cmd2\n\n$cmd3\n\n$cmd4\n\n";
+if ($ext eq "sam"){
 `parallel -j $nc samtools view -bS $inf/{1}.sam \'\|\' samtools sort -n -\@ $ncp -o $names/{1}_namesort.bam - ::: @nms`;
+}
+elsif ($ext eq "bam"){
+`parallel -j $nc samtools sort -n -\@ $ncp -o $names/{1}.bam $inf/{1}.bam ::: @nms`;
+}
 `parallel -j $nc samtools fixmate -m $names/{1}_namesort.bam $fix/{1}_fixmate.bam ::: @nms`;
 `parallel -j $nc samtools sort -\@ $ncp -o $coor/{1}_positionsort.bam $fix/{1}_fixmate.bam ::: @nms`;
 `parallel -j $nc --results $tmpdir samtools markdup -r -s $coor/{1}_positionsort.bam $ddp/{1}_markdup.bam ::: @nms`; 
