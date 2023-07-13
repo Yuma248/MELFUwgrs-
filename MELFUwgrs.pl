@@ -101,7 +101,7 @@ foreach $stp (@stptr){
 	}
         elsif ($stp eq "bedmarkrep" or $stprn == 5){
                 use bedmarkrep;
-		if (not defined ($input && $reference)){print "\nThis script will mark repeat regions using bedtools in parallel. Requires a repeat masked reference genome in a folder; and the samples  bam files after mapping, merge and mark duplicates all save in one folder.\n\nUsages: bedtoolsrepeats.pl\n\t-i <path to inputfolder>\n\t-rg <path to reference repeat regions masked, BAM/BED/GFF/VCF>\n\nOptional:\n\t-o <path to outputfolder, default bedout>\n\t-nc <number the cores or samples to use in parallel, default 4>\n\nFor example:\n\nbedtoolsrepeats.pl -i /yuma/dedup/ -o /yuma/repeatmrk/ -rg /yuma/makosharkgenome/repeat_mask_Iocy.bed -snc 60\n\n";exit;}
+		if (not defined ($input && $reference)){print "\nThis script will mark repeat regions using bedtools in parallel. Requires a repeat masked reference genome in a folder; and the samples  bam files after mapping, merge and mark duplicates all save in one folder.\n\nUsages: bedtoolsrepeats.pl\n\t-i <path to inputfolder>\n\t-rg <path to reference repeat regions masked, BAM/BED/GFF/VCF>\n\nOptional:\n\t-o <path to outputfolder, default bedout>\n\t-nc <number the cores or samples to use in parallel, default 4>\n\nFor example:\n\nMELFUwgrs.pl -stp bedmarkrep -i /yuma/dedup/ -o /yuma/repeatmrk/ -rg /yuma/makosharkgenome/repeat_mask_Iocy.bed -snc 60\n\n";exit;}
                 if (not defined ($snc)){$snc =4;}
                 if (not defined ($output)){$output ="./bedout";}
                 our @arg = ("-i $input","-o $output","-snc $snc","-rg $reference");
