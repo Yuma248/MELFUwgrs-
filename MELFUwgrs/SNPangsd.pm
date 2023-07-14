@@ -33,7 +33,7 @@ foreach $samplename (@samplesnames){
 }
 }
 if ($chrf eq "N"){
-our @scaffr=`grep \">\" $refgenome | head -n 20 | perl -p -e \'s/>//\' | perl -p -e \'s/\\s\.*\\n/\\n/\'`;
+our @scaffr=`grep \">\" $refgenome | head -n 30 | perl -p -e \'s/>//\' | perl -p -e \'s/\\s\.*\\n/\\n/\'`;
 } else {
 our @scaffr=`cat $chrf`;
 }
