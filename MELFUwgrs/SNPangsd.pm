@@ -42,7 +42,7 @@ chomp @scaffr;
 $cmd1="parallel -j $snc angsd -r {1} -b $bamlist -ref $refgenome -out $outputfolder\/{1} -GL 2 -doMajorMinor 1 -minMapQ 20 -minQ 20 -doMaf 1 -doBCF 1 -SNP_pval 1e-6 -doCounts 1 -minMaf 0.03 -doGeno 3 -doGlf 2 -uniqueonly 1 -remove_bads 1 -only_proper_pairs 0 -C 50 -baq 1 -doPost 1 -postCutoff 0.9 -geno_minDepth 3 -geno_maxDepth 1000 -nThreads 3 -minInd 17 ::: @scaffr";
 print "$cmd1\n";
 #`echo $cmd1 \>\> ./TestYuma`; 
-#system ($cmd1);
+system ($cmd1);
 #print "$count1\t$count2\n";
 
 }
