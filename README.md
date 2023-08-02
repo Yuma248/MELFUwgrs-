@@ -26,7 +26,7 @@ vcftools
 
 SNAP
 
-ANGSD
+ANGSD (including NGSadmix, PCAngsd, ngsLD)
 
 The easiest way to install the dependencies is using conda 
 
@@ -41,6 +41,8 @@ For SNAP
     make  
 
 Then copy snap-aligment to your path or include snap folder in your $PATH 
+
+
 
 
 # Basic usage:
