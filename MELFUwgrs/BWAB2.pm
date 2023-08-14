@@ -94,11 +94,11 @@ system ($cmd5);
 }
 elsif ($B eq "SNAP"){
 ##snap-aligner paired ./genomes/ChrAur2SNAP/ -compressedFastq ./trim/BO1.pair1.truncated.gz ./trim/BO1.pair2.truncated.gz -so -o snap/BO1.pairs.bam
-my $cmd ="parallel -j $ncores --link --results $outputfolder\/logsnap1 --noswap snap-aligner paired $refgenom -compressedFastq $inputfolder\/{1}\.pair1\.truncated\.gz $inputfolder\/{1}\.pair2\.truncated\.gz -so -o $outputfolder\/{2}\.pairs\.bam -t $nc ::: @samplesnames ::: @names";
-my $cmd2 ="parallel -j $ncores --link --results $outputfolder\/logsnap2 --noswap snap-aligner single $refgenom -compressedFastq $inputfolder\/{1}\.collapsed\.truncated\.gz -so -o $outputfolder\/{2}\.collapsed\.truncated\.bam -t $nc ::: @samplesnames ::: @names";
-my $cmd3 ="parallel -j $ncores --link --results $outputfolder\/logsnap3 --noswap snap-aligner single $refgenom -compressedFastq $inputfolder\/{1}\.collapsed\.gz -so -o  $outputfolder\/{2}\.collapsed\.bam -t $nc ::: @samplesnames ::: @names";
-my $cmd4 ="parallel -j $ncores --link --results $outputfolder\/logsnap4 --noswap snap-aligner single $refgenom -compressedFastq $inputfolder\/{1}\.singleton\.truncated\.gz -so -o $outputfolder\/{2}\.singleton\.truncated\.bam -t $nc ::: @samplesnames ::: @names";
-my $cmd5 ="parallel -j $ncores --link --results $outputfolder\/logmerge --noswap samtools merge $mergefolder/{1}.bam $outputfolder/{1}.pairs.bam $outputfolder/{1}.collapsed.truncated.bam $outputfolder/{1}.collapsed.bam $outputfolder/{1}.singleton.truncated.bam -O BAM ::: @names";
+my $cmd ="parallel -j $ncores --link --results $outputfolder\/logsnap1 --noswap snap-aligner paired $refgenom -compressedFastq $inputfolder\/{1}\.pair1\.truncated\.gz $inputfolder\/{1}\.pair2\.truncated\.gz -so -o $outputfolder\/{2}\.pairs\.bam -t $nc ::: @samplesnames";
+my $cmd2 ="parallel -j $ncores --link --results $outputfolder\/logsnap2 --noswap snap-aligner single $refgenom -compressedFastq $inputfolder\/{1}\.collapsed\.truncated\.gz -so -o $outputfolder\/{2}\.collapsed\.truncated\.bam -t $nc ::: @samplesnames";
+my $cmd3 ="parallel -j $ncores --link --results $outputfolder\/logsnap3 --noswap snap-aligner single $refgenom -compressedFastq $inputfolder\/{1}\.collapsed\.gz -so -o  $outputfolder\/{2}\.collapsed\.bam -t $nc ::: @samplesnames";
+my $cmd4 ="parallel -j $ncores --link --results $outputfolder\/logsnap4 --noswap snap-aligner single $refgenom -compressedFastq $inputfolder\/{1}\.singleton\.truncated\.gz -so -o $outputfolder\/{2}\.singleton\.truncated\.bam -t $nc ::: @samplesnames";
+my $cmd5 ="parallel -j $ncores --link --results $outputfolder\/logmerge --noswap samtools merge $mergefolder/{1}.bam $outputfolder/{1}.pairs.bam $outputfolder/{1}.collapsed.truncated.bam $outputfolder/{1}.collapsed.bam $outputfolder/{1}.singleton.truncated.bam -O BAM ::: @samplesnames";
 #my $cmd ="parallel -j $ncores --results ./logfiles --noswap --delay 10 bowtie2 -x $refgenom -1 $inputfolder\/{1}\.trim\.1\.fq\.gz -2 $inputfolder\/{1}\.trim\.2\.fq\.gz -S$
 #my $cmd ="parallel -j $ncores --results ./logfiles --noswap --delay 5 bowtie2 -x $refgenom -U $inputfolder\/{1}\.trim\.1\.fq\.gz -S $outputfolder\/{1}\.sam --no-contain -$
 print "$cmd\n";
