@@ -22,6 +22,15 @@ closedir (DIR);
 if ( !-d $outputfolder ) {
     make_path $outputfolder or die "Failed to create path: $outputfolder";
 }
+our $LDo=$outputfolder."/LDout";
+if ( !-d $LDo ) {
+    make_path $LDo or die "Failed to create path: $LDo";
+}
+our $pruned=$outputfolder."/pruned";
+if ( !-d $pruned ) {
+    make_path $pruned or die "Failed to create path: $pruned";
+}
+
 our @samplesnames=();
 our @pops=();
 
@@ -44,6 +53,39 @@ print "$cmd1\n";
 #`echo $cmd1 \>\> ./TestYuma`; 
 system ($cmd1);
 #print "$count1\t$count2\n";
+
+
+use Parallel::Loops;
+our %CHRNSNP =();
+our $cpuCHR = scalar(@scaffr);
+my $plchr = Parallel::Loops->new($cpuCHR);
+$plchr->share( \%CHRNSNP);
+$plchr->foreach (\@scaffr, sub{
+my $chr = $_ ;
+`zcat $outputfolder\/$chr\.mafs.gz | awk 'NR>1 {print \$1\"\\t\"\$2}' | gzip \>\> $outputfolder\/$chr\.pos.gz`;
+`zcat $outputfolder\/$chr\.beagle.gz | cut -f 4-  |  gzip \>\> $outputfolder\/$chr\_Y.beagle.gz`;
+$SNPN=`zcat $outputfolder\/$chr\.pos.gz | wc -l`;
+chomp $SNPN;
+print "$SNPN\n";
+$NS=scalar(@samplesnames);
+`ngsLD --geno $outputfolder\/$chr\_Y.beagle.gz --pos $outputfolder\/$chr\.pos.gz --probs --n_ind $NS --n_sites $SNPN --max_kb_dist 50 --n_threads 3 --out $LDo\/$chr\.ld `;
+$CHRNSNP{$chr}=$SNPN;
+`prune_graph --in $LDo\/$chr\.ld --weight-field column_7 --weight-filter \"column_3 <= 50000 && column_7 >= 0.8\" --out $LDo\/$chr\_unlinked.pos`;
+`cat $LDo\/$chr\_unlinked.pos | while read i\; do POS=\$(echo \$i | awk -F\"\:\" \'{print \$2}\')\; zcat $outputfolder\/$chr\.mafs.gz | awk -v pop=\$POS -v OFS=\"\\t\" '\$2 == pop {print \$1,\$2,\$3,\$4 ; exit}' >> $LDo\/$chr\_snps.list;  done`;
+`awk -F\"\:\" \'{print \$2}\' $LDo\/$chr\_unlinked.pos | while read -r POS; do zcat $outputfolder\/$chr\.mafs | awk -v pop=\$POS -v OFS=\"\\t\" '\$2 == pop {print \$1,\$2,\$3,\$4 ; exit}' >> $LDo\/$chr\_snps.list;  done`;
+`angsd sites index $LDo\/$chr\_snps.list`;
+`angsd -r $chr -b $bamlist -ref $refgenome -out $pruned\/$chr -GL 2 -doGlf 2 -doMajorMinor 3 -doMAF 1 -doPost 1 -doCounts 1 -doIBS 1 -sites $LDo\/$chr\_snps.list`;
+});
+
+`zcat  $outputfolder\/$scaffr[0]\.beagle.gz | head -n 1 | gzip >> $outputfolder\/Somatic.beagle.gz`;
+`zcat  $pruned\/$scaffr[0]\.beagle.gz | head -n 1 | gzip >> $pruned\/Somatic.beagle.gz`;
+
+foreach my $chr (@scaffr){
+        next if ($chr =~ m/X/ || $chr =~ m/Y/ || $chr =~ m/MT/);
+        `zcat $pruned\/$chr\.beagle.gz | tail -n +2 | gzip >> $pruned\/Somatic.beagle.gz`;
+        `zcat $outputfolder\/$chr\.beagle.gz | tail -n +2 | gzip >> $outputfolder\/Somatic.beagle.gz`;
+}
+
 
 }
 
