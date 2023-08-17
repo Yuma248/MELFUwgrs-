@@ -9,8 +9,8 @@ import pandas as pd
 parser = argparse.ArgumentParser(description='This script create take a subset of individual from a beagle file.',epilog=("Example: python IndBeagle.py -b input.beagle.gz -l bamlist -i indlist -o output"))
 parser.add_argument("-b","--beagle", type=str,help="Input beagle file, a multi-sample beagle files it could be  .gz compressed")
 parser.add_argument("-l", "--bamlist", type=str, help="The bamlist file used to produce the beagle file, tab delimited file with two columns, first the name of chromosomes as they are in the VCF, and then the size of each of them")
-parser.add_argument("-i", "--indlist", type=str, help="A list of individual samples, with the names as they are in the bamlist file")
-parser.add_argument("-o", "--output", type=str, default="NewBeagle.gz", help="Path or name for the new beagle file")
+parser.add_argument("-i", "--indlist", type=str, help="A list of samples that you want to subsample from the beagle file, the names should be in the same format as in the bamfile excluding paths or folders")
+parser.add_argument("-o", "--output", type=str, default="NewBeagle.gz", help="Path and name to the new beagle file with a .gz extension")
 
 args = parser.parse_args()
 
