@@ -79,11 +79,15 @@ $CHRNSNP{$chr}=$SNPN;
 
 `zcat  $outputfolder\/$scaffr[0]\.beagle.gz | head -n 1 | gzip >> $outputfolder\/Somatic.beagle.gz`;
 `zcat  $pruned\/$scaffr[0]\.beagle.gz | head -n 1 | gzip >> $pruned\/Somatic.beagle.gz`;
+`zcat  $outputfolder\/$scaffr[0]\.mafs.gz | head -n 1 | gzip >> $outputfolder\/Somatic.mafs.gz`;
+`zcat  $pruned\/$scaffr[0]\.mafs.gz | head -n 1 | gzip >> $pruned\/Somatic.mafs.gz`;
 
 foreach my $chr (@scaffr){
         next if ($chr =~ m/X/ || $chr =~ m/Y/ || $chr =~ m/MT/);
         `zcat $pruned\/$chr\.beagle.gz | tail -n +2 | gzip >> $pruned\/Somatic.beagle.gz`;
         `zcat $outputfolder\/$chr\.beagle.gz | tail -n +2 | gzip >> $outputfolder\/Somatic.beagle.gz`;
+        `zcat $pruned\/$chr\.mafs.gz | tail -n +2 | gzip >> $pruned\/Somatic.mafs.gz`;
+        `zcat $outputfolder\/$chr\.mafs.gz | tail -n +2 | gzip >> $outputfolder\/Somatic.mafs.gz`;
 }
 
 
