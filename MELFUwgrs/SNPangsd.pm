@@ -53,6 +53,9 @@ print "$cmd1\n";
 system ($cmd1);
 
 
+
+
+
 use Parallel::Loops;
 our %CHRNSNP =();
 our $cpuCHR = scalar(@scaffr);
@@ -63,6 +66,11 @@ my $chr = $_ ;
 `zcat $outputfolder\/$chr\.mafs.gz | awk 'NR>1 {print \$1\"\\t\"\$2}' | gzip \>\> $outputfolder\/$chr\.pos.gz`;
 `zcat $outputfolder\/$chr\.beagle.gz | cut -f 4-  |  gzip \>\> $outputfolder\/$chr\_Y.beagle.gz`;
 $SNPN=`zcat $outputfolder\/$chr\.pos.gz | wc -l`;
+`zcat  $outputfolder\/$chr\.mafs.gz | cut -f5 |sed 1d >>  $outputfolder\/$chr\.freq`;
+`zcat $outputfolder\/$chr\.mafs.gz | awk -v OFS='\\t' 'NR>1 {print \$1,\$2,\$3,\$4}' >> $outputfolder\/$chr\_snps.list`;
+`angsd sites index $outputfolder\/$chr\_snps.list`;
+`angsd -r $chr -b $bamlist -ref $refgenome -out $outputfolder\/$chr -GL 2 -doGlf 3 -doMajorMinor 3 -doMAF 1 -sites $outputfolder\/$chr\_snps.list -nThreads 3`;
+
 chomp $SNPN;
 print "$SNPN\n";
 $NS=scalar(@samplesnames);
@@ -72,7 +80,9 @@ $CHRNSNP{$chr}=$SNPN;
 `cat $LDo\/$chr\_unlinked.pos | while read i\; do POS=\$(echo \$i | awk -F\"\:\" \'{print \$2}\')\; zcat $outputfolder\/$chr\.mafs.gz | awk -v pop=\$POS -v OFS=\"\\t\" '\$2 == pop {print \$1,\$2,\$3,\$4 ; exit}' >> $LDo\/$chr\_snps.list;  done`;
 `awk -F\"\:\" \'{print \$2}\' $LDo\/$chr\_unlinked.pos | while read -r POS; do zcat $outputfolder\/$chr\.mafs | awk -v pop=\$POS -v OFS=\"\\t\" '\$2 == pop {print \$1,\$2,\$3,\$4 ; exit}' >> $LDo\/$chr\_snps.list;  done`;
 `angsd sites index $LDo\/$chr\_snps.list`;
-`angsd -r $chr -b $bamlist -ref $refgenome -out $pruned\/$chr -GL 2 -doGlf 2 -doMajorMinor 3 -doMAF 1 -doPost 1 -doCounts 1 -doIBS 1 -sites $LDo\/$chr\_snps.list`;
+`angsd -r $chr -b $bamlist -ref $refgenome -out $pruned\/$chr -GL 2 -doGlf 2 -doMajorMinor 3 -doMAF 1 -doPost 1 -doCounts 1 -doIBS 1 -sites $LDo\/$chr\_snps.list -nThreads 3`;
+`angsd -r $chr -b $bamlist -ref $refgenome -out $pruned\/$chr -GL 2 -doGlf 3 -doMajorMinor 3 -doMAF 1 -sites $pruned\/$chr\_snps.list -nThreads 3`;
+
 });
 
 foreach our $fold ($outputfolder,$pruned){
@@ -88,8 +98,6 @@ foreach my $chr (@scaffr){
 `zcat  $fold\/Somatic.mafs.gz | cut -f5 |sed 1d >>  $fold\/Somatic.freq`;
 `zcat $fold\/Somatic.mafs.gz | awk -v OFS='\\t' 'NR>1 {print \$1,\$2,\$3,\$4}' >> $fold\/Somatic_snps.list`;
 `angsd sites index $fold\/Somatic_snps.list`;
-`angsd -b $bamlist -ref $refgenome -out $fold\/Somatic -GL 2 -doGlf 3 -doMajorMinor 3 -doMAF 1 -doPost 1 -sites $fold\/Somatic_snps.list -nThreads $snc`;
-
 }
 }
 
