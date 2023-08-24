@@ -93,7 +93,7 @@ foreach my $chr (@scaffr){
         next if ($chr =~ m/X/ || $chr =~ m/Y/ || $chr =~ m/MT/);
         `zcat $fold\/$chr\.beagle.gz | tail -n +2 | gzip >> $fold\/Somatic.beagle.gz`;
         `zcat $fold\/$chr\.mafs.gz | tail -n +2 | gzip >> $fold\/Somatic.mafs.gz`;
-        `zcat $fold\/$chr\.glf.gz | tail -n +2 | gzip >> $fold\/Somatic.glf.gz`;
+        `zcat $fold\/$chr\.glf.gz | gzip >> $fold\/Somatic.glf.gz`;
 }
 
 `zcat  $fold\/Somatic.mafs.gz | cut -f5 |sed 1d >>  $fold\/Somatic.freq`;
