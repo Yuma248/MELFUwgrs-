@@ -88,7 +88,7 @@ foreach my $chr (@scaffr){
 `zcat  $fold\/Somatic.mafs.gz | cut -f5 |sed 1d >>  $fold\/Somatic.freq`;
 `zcat $fold\/Somatic.mafs.gz | awk -v OFS='\\t' 'NR>1 {print \$1,\$2,\$3,\$4}' >> $fold\/Somatic_snps.list`;
 `angsd sites index $fold\/Somatic_snps.list`;
-`angsd -b $bamlist -ref $refgenome -out $fold\/Somatic -GL 2 -doGlf 3 -doMajorMinor 3 -doMAF 1 -doPost 1 -doCounts 1 -doIBS 1 -sites $fold\/Somatic_snps.list`;
+`angsd -b $bamlist -ref $refgenome -out $fold\/Somatic -GL 2 -doGlf 3 -doMajorMinor 3 -doMAF 1 -doPost 1 -doCounts 1 -sites $fold\/Somatic_snps.list -nThreads $snc`;
 
 }
 }
