@@ -90,6 +90,7 @@ callSFS.pl
          -rg <path to reference genome used to map the bam files>
          
 Optional:
+
         -s < list of sites to be considered, recommended to use pruned SNPs to avoid LD effects, this list should be in the site format from ANGSD>
         
         -lnc <number of runs in parallel, it works per sample pop and pairs of pop, default 10>
@@ -110,8 +111,9 @@ NGSadmixP.pl
 
         -i <beagle format input file>
         
-Optional: 
-        -o <output folder to save resutls, default ./NGSadmixR>
+Optional:
+
+        -o <output folder to save results, default ./NGSadmixR>
         
         -ind <minimum number of informative individuals, default 0>
         
