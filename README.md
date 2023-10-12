@@ -53,23 +53,23 @@ Usage:
 MELFUwgrs.pl 
         -stp <You need at least determine what steps you want to run>
         
-                indref: <Indexs the reference genome with samtools, picard, bowtie2 and snap> 
+                indref: <Indexs the reference genome with samtools, picard, bowtie2, and snap> 
                 
                 trim: <It will use AdapterRemoval to trim and filter reads> 
                 
                 concat: <It will concatenate fastq files of the same sample but different runs in one file> 
                 
-                alignment: <It will use bowtie2, bwa or snap to align reads to a reference genome> 
+                alignment: <It will use bowtie2, bwa, or snap to align reads to a reference genome> 
                 
-                dedup: <This step will sort sam/bam files, convert sam to bam (if necessary) and mask duplicates> 
+                dedup: <This step will sort sam/bam files, convert sam to bam (if necessary), and mask duplicates> 
                 
-                indelrea: <This step will locally realign indels, although this is not recommended any more> 
+                indelrea: <This step will locally realign indels, although this is not recommended anymore> 
                 
                 bedmarkrep: <This step will mask repeat regions in the genome> 
                 
                 snpcalling: <This step will use ANGSD to simultaneously call and genotype SNP> 
                 
-                filtering: <This step will use vcftools to filter SNPs, I recommend to use this automatically to have an idea of your data, but play whit the parameters if you have the time> 
+                filtering: <This step will use vcftools to filter SNPs, I recommend using this automatically to have an idea of your data, but play with the parameters if you have the time> 
                 
 # Scripts
 
@@ -81,14 +81,14 @@ Usage:
 callSFS.pl 
         -i <inputfolder with all bam files to used>
         
-         -o <output folder to save all the resutls>
+         -o <output folder to save all the results>
          
          -pm <popmap, tab delimited files with sample names in the first column and corresponding pop in the second column>
          
          -rg <path to reference genome used to map the bam files>
          
 Optional:
-        -s <liste of sites to be considere, recomended to use pruned SNPs to avoid LD effects, this list should be in the site format from ANGSD>
+        -s < list of sites to be considered, recommended to use pruned SNPs to avoid LD effects, this list should be in the site format from ANGSD>
         
         -lnc <number of runs in parallel, it works per sample pop and pairs of pop, default 10>
         
@@ -98,3 +98,32 @@ Optional:
 Example:
 
 calSFS -i /Yuma/mapped/ -o /Yuma/SFSout/ -pm /Yuma/popmap -rg /Yuma/genome/REFERENCE.fasta -s /Yuma/pruned/Somatic_prunedSNPs.list -snc 4 -lnc 15.
+
+## NGSadmixP
+This script runs NGSadmix in parallel for different K and repetitions.
+
+Usage:
+
+NGSadmixP.pl 
+        -i <beagle format input file>
+        
+Optional: 
+        -o <output folder to save resutls, default ./NGSadmixR>
+        
+        -ind <minimum number of informative individuals, default 0>
+        
+        -mK <maximum K, number of populations assumed, default 5>
+        
+        -nc <number cores to run in parallel, default 2 >
+        
+        -snc <number of cores per each run, default 30>
+        
+        -rep <number replicates, default 1>
+        
+        -maf <minimum minor allele frequency, default 0.01>
+        
+
+For example:
+
+ NGSadmixP -i yuma.beagle -o ./NGSadmixR/ -mK 10 -rep 5 -nc 3 -snc 30 -maf 0.05
+
