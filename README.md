@@ -50,7 +50,8 @@ Then copy snap-aligment to your path or include snap folder in your $PATH
 
 Usage:
 
-MELFUwgrs.pl 
+MELFUwgrs.pl
+
         -stp <You need at least determine what steps you want to run>
         
                 indref: <Indexs the reference genome with samtools, picard, bowtie2, and snap> 
@@ -78,7 +79,8 @@ This script uses ANGSD to calculate SFS per individual and population, and then 
 
 Usage:
 
-callSFS.pl 
+callSFS.pl
+
         -i <inputfolder with all bam files to used>
         
          -o <output folder to save all the results>
@@ -104,7 +106,8 @@ This script runs NGSadmix in parallel for different K and repetitions.
 
 Usage:
 
-NGSadmixP.pl 
+NGSadmixP.pl
+
         -i <beagle format input file>
         
 Optional: 
