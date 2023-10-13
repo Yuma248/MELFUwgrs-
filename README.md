@@ -141,15 +141,15 @@ usage: SWHet.py [-h] [-v IVCF] [-c CHRLEN] [-w WIDSIZ] [-s STESIZ]
 
 optional arguments:
 
-  -h, --help
+  -h, --help 
   
-                          Show this help message and exit
+                            Show this help message and exit
   
   -v IVCF, --IVCF IVCF              
   
                          Input VCF, it can be single- or multi-sample but should be filtered and it should have extension .vcf or .vcf.gz
   
-  -c CHRLEN, --chrlen CHRLEN
+  -c CHRLEN, --chrlen CHRLEN 
                           
                          Chromosome lengths information, tab delimited file with two columns, first the name of chromosomes as they are in the VCF, and then the size of each of them
   
