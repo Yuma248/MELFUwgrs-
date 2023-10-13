@@ -141,23 +141,25 @@ usage: SWHet.py [-h] [-v IVCF] [-c CHRLEN] [-w WIDSIZ] [-s STESIZ]
 
 optional arguments:
 
-  -h, --help                        Show this help message and exit
+  -h, --help
+  
+                          Show this help message and exit
   
   -v IVCF, --IVCF IVCF              
   
-                          Input VCF, it can be single- or multi-sample but should be filtered and it should have extension .vcf or .vcf.gz
+                         Input VCF, it can be single- or multi-sample but should be filtered and it should have extension .vcf or .vcf.gz
   
   -c CHRLEN, --chrlen CHRLEN
                           
-                          Chromosome lengths information, tab delimited file with two columns, first the name of chromosomes as they are in the VCF, and then the size of each of them
+                         Chromosome lengths information, tab delimited file with two columns, first the name of chromosomes as they are in the VCF, and then the size of each of them
   
   -w WIDSIZ, --widsiz WIDSIZ
   
-                          Window size, to calculate Heterozygosity, default 1,000,000
+                         Window size, to calculate Heterozygosity, default 1,000,000
 
   -s STESIZ, --stesiz STESIZ
   
-                          Step size, is the number of bp that the window moves to calculate heterozygosity, if this is equal to the window size, the windows will not overlap, default 1,000,000
+                         Step size, is the number of bp that the window moves to calculate heterozygosity, if this is equal to the window size, the windows will not overlap, default 1,000,000
 
 
 Example: python SWHet.py -v input.vcf.gz -c Chromolenght -w 100000 -s 10000
