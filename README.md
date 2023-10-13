@@ -166,5 +166,5 @@ Arguments:
 
 Example:
 
-python SWHet.py -v input.vcf.gz -c Chromolenght -w 100000 -s 10000
+SWHet.py -v input.vcf.gz -c Chromolenght -w 100000 -s 10000
 
