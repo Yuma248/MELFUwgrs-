@@ -132,3 +132,25 @@ For example:
 
  NGSadmixP -i yuma.beagle -o ./NGSadmixR/ -mK 10 -rep 5 -nc 3 -snc 30 -maf 0.05
 
+
+## SWhet
+This is from https://github.com/jarobin/CaliforniaCondorGenome2021/blob/main/SlidingWindowHet.py with some modifications. It counts the number of called genotypes and the number of heterozygotes per
+sample in sliding windows
+
+usage: SWHet.py [-h] [-v IVCF] [-c CHRLEN] [-w WIDSIZ] [-s STESIZ]
+
+optional arguments:
+
+  -h, --help                        Show this help message and exit
+  
+  -v IVCF, --IVCF IVCF              Input VCF, it can be single- or multi-sample but should be filtered and it should have extension .vcf or .vcf.gz
+  
+  -c CHRLEN, --chrlen CHRLEN        Chromosome lengths information, tab delimited file with two columns, first the name of chromosomes as they are in the VCF, and then the size of each of them
+  
+  -w WIDSIZ, --widsiz WIDSIZ        Window size, to calculate Heterozygosity, default 1,000,000
+
+  -s STESIZ, --stesiz STESIZ        Step size, the number of bp that the window moves to calculate heterozygosity, if this is equal to the window size, the windows will not overlap, default 1,000,000
+
+
+Example: python SWHet.py -v input.vcf.gz -c Chromolenght -w 100000 -s 10000
+
