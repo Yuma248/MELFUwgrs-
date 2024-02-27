@@ -25,6 +25,6 @@ my @names=`ls $inf/*.bam | sed 's/__/_/g' | sed 's/_markdup.bam//g' | sed 's/_me
 foreach $name (@names){chomp $name; $name=~ s/$inf\///g; push (@nms, $name);}
 my $cmd="parallel -j $nc bedtools intersect -abam $inf/{1}*.bam -b $refgr -v \'\>\' $outf/{1}_repeatmasked.bam ::: @nms";
 `parallel -j $snc bedtools intersect -abam $inf/{1}*.bam -b $refgr -v \'\>\' $outf/{1}_repeatmasked.bam ::: @nms`;
-`parallel -j $snc samtools index $outf/{1}_repeatmasked.bam.bam ::: @nms`;
+`parallel -j $snc samtools index $outf/{1}_repeatmasked.bam ::: @nms`;
 }
 1;
