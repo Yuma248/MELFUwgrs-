@@ -1,5 +1,5 @@
 # MELFUwgrs!
-Pipeline to call snps using a reference genome
+Pipeline to call snps on whole genome resequencing data.
 
 # Download
         git clone https://github.com/Yuma248/MELFUwgrs-.git
