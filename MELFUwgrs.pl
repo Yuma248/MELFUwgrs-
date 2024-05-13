@@ -15,7 +15,7 @@ while (@ARGV){
 	elsif ($_=~ /^-ind$/){$ind=shift @ARGV;}
 	elsif ($_=~ /^-exf$/){$exf=shift @ARGV;}
 	elsif ($_=~ /^-chrf$/){$chrf=shift @ARGV;}
- 	elsif ($_=~ /^-nindf$/){$nind=shift @ARGV;}
+ 	elsif ($_=~ /^-nind$/){$nind=shift @ARGV;}
 }
 if (not defined ($stp)){print "\nThis pipeline  trim and\/or map reads, and call SNPs/SVs and filter them. The required arguments and inputs depend of the steps you want to perform. You will have to use the option -stpn and select the step you want to run. To check the step names run the script without arguments, if you want to check the arguments for one step just run the script with the specific step but without extra arguments (example MELFUwgrs.pl -stp trim).\n\nUsage:\nMELFUwgrs.pl\n\t-stp <You need at least determine what steps you want to run>\n\t\tindref\: <Indexs the reference genome with samtools, picard, bowtie2 and snap>\n\t\ttrim\: <It will use AdapterRemoval to trim and filter reads>\n\t\tconcat\: <It will concatenate fastq files of the same sample but different runs in one file>\n\t\talignment\: <It will use bowtie2, bwa or snap to align reads to a reference genome>\n\t\tdedup\: <This step will sort sam/bam files, convert sam to bam (if necessary) and mask duplicates>\n\t\tindelrea\: <This step will locally realign indels, although this is not recommended any more>\n\t\tbedmarkrep: <This step will mask repeat regions in the genome>\n\t\tsnpcalling\: <This step will use ANGSD to simultaneously call and genotype SNP>\n\t\tfiltering\: <This step will use vcftools to filter SNPs, I recommend to use this automatically to have an idea of your data, but play whit the parameters if you have the time>\n\n"; exit;}
 if (not defined ($stprn)){$stprn = 0};
