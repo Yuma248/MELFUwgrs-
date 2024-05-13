@@ -51,8 +51,8 @@ our @scaffr=`cat $chrf`;
 chomp @scaffr;
 $NS=scalar(@samplesnames);
 $tind=int(($NS * $nind) + 0.5);
-#$cmd1="parallel -j $snc angsd -r {1} -b $bamlist -ref $refgenome -out $outputfolder\/{1} -GL 2 -doMajorMinor 1 -minMapQ 20 -minQ 20 -doMaf 1 -doBCF 1 -SNP_pval 1e-6 -doCounts 1 -minMaf 0.03 -doGeno 3 -doGlf 2 -uniqueonly 1 -remove_bads 1 -only_proper_pairs 0 -C 50 -baq 1 -doPost 1 -postCutoff 0.9 -geno_minDepth 3 -geno_maxDepth 1000 -nThreads 3 -minInd $tind ::: @scaffr";
-$cmd1="parallel -j $snc angsd -r {1} -b $bamlist -ref $refgenome -out $outputfolder\/{1} -GL 2 -doMajorMinor 1 -minMapQ 20 -minQ 20 -doMaf 1 -doBCF 1 -SNP_pval 1e-6 -doCounts 1 -minMaf 0.03 -doGeno 3 -doGlf 2 -uniqueonly 1 -remove_bads 1 -only_proper_pairs 0 -C 50 -baq 1 -doPost 1 -postCutoff 0.9 -geno_minDepth 3 -geno_maxDepth 1000 -nThreads 3 -minInd 17 ::: @scaffr";
+$cmd1="parallel -j $snc angsd -r {1} -b $bamlist -ref $refgenome -out $outputfolder\/{1} -GL 2 -doMajorMinor 1 -minMapQ 20 -minQ 20 -doMaf 1 -doBCF 1 -SNP_pval 1e-6 -doCounts 1 -minMaf 0.03 -doGeno 3 -doGlf 2 -uniqueonly 1 -remove_bads 1 -only_proper_pairs 0 -C 50 -baq 1 -doPost 1 -postCutoff 0.9 -geno_minDepth 3 -geno_maxDepth 1000 -nThreads 3 -minInd $tind ::: @scaffr";
+##$cmd1="parallel -j $snc angsd -r {1} -b $bamlist -ref $refgenome -out $outputfolder\/{1} -GL 2 -doMajorMinor 1 -minMapQ 20 -minQ 20 -doMaf 1 -doBCF 1 -SNP_pval 1e-6 -doCounts 1 -minMaf 0.03 -doGeno 3 -doGlf 2 -uniqueonly 1 -remove_bads 1 -only_proper_pairs 0 -C 50 -baq 1 -doPost 1 -postCutoff 0.9 -geno_minDepth 3 -geno_maxDepth 1000 -nThreads 3 -minInd 17 ::: @scaffr";
 print "$cmd1\n";
 system ($cmd1);
 
@@ -84,7 +84,7 @@ $CHRNSNP{$chr}=$SNPN;
 `cat $LDo\/$chr\_unlinked.pos | while read i\; do POS=\$(echo \$i | awk -F\"\:\" \'{print \$2}\')\; zcat $outputfolder\/$chr\.mafs.gz | awk -v pop=\$POS -v OFS=\"\\t\" '\$2 == pop {print \$1,\$2,\$3,\$4 ; exit}' >> $LDo\/$chr\_snps.list;  done`;
 `awk -F\"\:\" \'{print \$2}\' $LDo\/$chr\_unlinked.pos | while read -r POS; do zcat $outputfolder\/$chr\.mafs | awk -v pop=\$POS -v OFS=\"\\t\" '\$2 == pop {print \$1,\$2,\$3,\$4 ; exit}' >> $LDo\/$chr\_snps.list;  done`;
 `angsd sites index $LDo\/$chr\_snps.list`;
-`angsd -r $chr -b $bamlist -ref $refgenome -out $pruned\/$chr -GL 2 -doGlf 2 -doMajorMinor 3 -doMAF 1 -doPost 1 -doCounts 1 -doIBS 1 -sites $LDo\/$chr\_snps.list -nThreads 3`;
+`angsd -r $chr -b $bamlist -ref $refgenome -out $pruned\/$chr -GL 2 -doGlf 2 -doMajorMinor 3 -doMAF 1 -doBCF 1 -doPost 1 -doCounts 1 -doIBS 1 -sites $LDo\/$chr\_snps.list -nThreads 3`;
 `angsd -r $chr -b $bamlist -ref $refgenome -out $pruned\/$chr -GL 2 -doGlf 3 -doMajorMinor 3 -doMAF 1 -sites $LDo\/$chr\_snps.list -nThreads 3`;
 
 });
