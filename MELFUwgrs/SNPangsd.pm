@@ -84,7 +84,7 @@ $CHRNSNP{$chr}=$SNPN;
 `cat $LDo\/$chr\_unlinked.pos | while read i\; do POS=\$(echo \$i | awk -F\"\:\" \'{print \$2}\')\; zcat $outputfolder\/$chr\.mafs.gz | awk -v pop=\$POS -v OFS=\"\\t\" '\$2 == pop {print \$1,\$2,\$3,\$4 ; exit}' >> $LDo\/$chr\_snps.list;  done`;
 `awk -F\"\:\" \'{print \$2}\' $LDo\/$chr\_unlinked.pos | while read -r POS; do zcat $outputfolder\/$chr\.mafs | awk -v pop=\$POS -v OFS=\"\\t\" '\$2 == pop {print \$1,\$2,\$3,\$4 ; exit}' >> $LDo\/$chr\_snps.list;  done`;
 `angsd sites index $LDo\/$chr\_snps.list`;
-`angsd -r $chr -b $bamlist -ref $refgenome -out $pruned\/$chr -GL 2 -doGlf 2 -doMajorMinor 3 -doMAF 1 -doBCF 1 -doPost 1 -doCounts 1 -doIBS 1 -sites $LDo\/$chr\_snps.list -nThreads 3`;
+`angsd -r $chr -b $bamlist -ref $refgenome -out $pruned\/$chr -GL 2 -doGlf 2 -doMajorMinor 3 -doMAF 1 -doBCF 1 -doGeno 3 -doPost 1 -doCounts 1 -doIBS 1 -sites $LDo\/$chr\_snps.list -nThreads 3`;
 `angsd -r $chr -b $bamlist -ref $refgenome -out $pruned\/$chr -GL 2 -doGlf 3 -doMajorMinor 3 -doMAF 1 -sites $LDo\/$chr\_snps.list -nThreads 3`;
 
 });
