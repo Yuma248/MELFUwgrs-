@@ -34,7 +34,7 @@ my @cod=split /\,/, $exf;
 my @names=`ls $inf/*$cod[0] | sed 's/$cod[0]//g'`;
 foreach $name (@names){chomp $name; $name=~ s/$inf\///g; push (@nms, $name);}
 if ((scalar (@cod)) < 2){
-my $cmd="parallel -j $nc --results $tmpdir --tmpdir $tmpdir AdapterRemoval --file1 $inf/{1}$cod[0] --basename $outf/{1} --minlength 30 --trimns --gzip ::: @nms";
+my $cmd="parallel -j $nc --results $tmpdir --tmpdir $tmpdir AdapterRemoval --file1 $inf/{1}$cod[0] --basename $outf/{1} --minlength 70 --trimns --trimqualities --collaps --gzip ::: @nms";
 print "$cmd\n\n";
 `parallel -j $nc --results $tmpdir --tmpdir $tmpdir AdapterRemoval --file1 $inf/{1}$cod[0] --basename $outf/{1} --minlength 70 --trimns --trimqualities --collapse --gzip ::: @nms`;
 ### yuma
