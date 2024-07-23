@@ -26,9 +26,9 @@ if ( !-d $ofn ){`mkdir $ofn`;}
 if (not defined ($nc)){$nc=4;}
 if (not defined ($ncp)){$ncp=1;}
 our $nct=$nc + $ncp;
-my $ext=`ls $inf/*.{sam,bam} | head -n 1 | awk -F'.' '{print $NF}'`;
+my $ext=`ls $inf/*.{sam,bam} | head -n 1 | awk -F'.' '{print \$NF}'`;
 chomp $ext;
-my @names=`ls $inf/*.{sam,bam} | sed 's/.sam//g' | sed 's/.bam//g`;
+my @names=`ls $inf/*.{sam,bam} | sed 's/.sam//g' | sed 's/.bam//g'`;
 foreach $name (@names){chomp $name; $name=~ s/$inf\///g; push (@nms, $name);}
 if ($ext eq "sam"){
 my $cmd="parallel -j $nc samtools view -bS $inf/{1}.sam \'\|\' samtools sort -n -\@ $ncp -o @$names/{1}_namesort.bam - ::: @nms";
