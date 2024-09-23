@@ -31,11 +31,11 @@ chomp $ext;
 my @names=`ls $inf/*.{sam,bam} | sed 's/.sam//g' | sed 's/.bam//g'`;
 foreach $name (@names){chomp $name; $name=~ s/$inf\///g; push (@nms, $name);}
 if ($ext eq "sam"){
-my $cmd="parallel -j $nc samtools view -bS $inf/{1}.sam \'\|\' samtools sort -n -\@ $ncp -o @$names/{1}_namesort.bam - ::: @nms";
+my $cmd="parallel -j $nc samtools view -bS $inf/{1}.sam \'\|\' samtools sort -n -\@ $ncp -o $names/{1}_namesort.bam - ::: @nms";
 `parallel -j $nc samtools view -bS $inf/{1}.sam \'\|\' samtools sort -n -\@ $ncp -o $names/{1}_namesort.bam - ::: @nms`;
 }
 elsif ($ext eq "bam"){
-my $cmd="parallel -j $nc samtools sort -n -\@ $ncp -o @$names/{1}_namesort.bam $inf/{1}.bam ::: @nms";
+my $cmd="parallel -j $nc samtools sort -n -\@ $ncp -o $names/{1}_namesort.bam $inf/{1}.bam ::: @nms";
 `parallel -j $nc samtools sort -n -\@ $ncp -o $names/{1}_namesort.bam $inf/{1}.bam ::: @nms`;
 }
 my $cmd2="parallel -j $nc samtools fixmate -m $names/{1}_namesort.bam $fix/{1}_fixmate.bam ::: @nms";
