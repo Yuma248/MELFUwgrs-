@@ -42,7 +42,18 @@ For SNAP
 
 Then copy snap-aligment to your path or include snap folder in your $PATH 
 
+For ngsLD
 
+    git clone https://github.com/fgvieira/ngsLD.git
+
+    cd ngsLD
+    
+    make 
+    
+    git clone https://github.com/fgvieira/prune_graph.git
+
+    cargo build --release
+   
 
 
 # Basic usage:
