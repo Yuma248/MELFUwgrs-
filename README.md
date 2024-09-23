@@ -52,9 +52,11 @@ For ngsLD
     
     git clone https://github.com/fgvieira/prune_graph.git
 
+    cd prune_graph
+    
     cargo build --release
    
-
+And copy executables (ngsLD and prune_graph) to your path or include the folders in your $PATH
 
 # Basic usage:
 
