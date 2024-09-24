@@ -80,7 +80,10 @@ print "$SNPN\n";
 $NS=scalar(@samplesnames);
 `ngsLD --geno $outputfolder\/$chr\_Y.beagle.gz --pos $outputfolder\/$chr\.pos.gz --probs --n_ind $NS --n_sites $SNPN --max_kb_dist 50 --n_threads 3 --out $LDo\/$chr\.ld `;
 $CHRNSNP{$chr}=$SNPN;
-`prune_graph --in $LDo\/$chr\.ld --weight-field column_7 --weight-filter \"column_3 <= 50000 && column_7 >= 0.8\" --out $LDo\/$chr\_unlinked.pos`;
+##For old version of ngsLD with not headers in the ld files
+####`prune_graph --in $LDo\/$chr\.ld --weight-field column_7 --weight-filter \"column_3 <= 50000 && column_7 >= 0.8\" --out $LDo\/$chr\_unlinked.pos`;
+##For new version of ngsLD with headers in the output ld files
+`prune_graph --header --in $LDo\/$chr\.ld --weight-field "r2" --weight-filter \"dist <= 50000 && r2 >= 0.8\" --out $LDo\/$chr\_unlinked.pos`;
 `cat $LDo\/$chr\_unlinked.pos | while read i\; do POS=\$(echo \$i | awk -F\"\:\" \'{print \$2}\')\; zcat $outputfolder\/$chr\.mafs.gz | awk -v pop=\$POS -v OFS=\"\\t\" '\$2 == pop {print \$1,\$2,\$3,\$4 ; exit}' >> $LDo\/$chr\_snps.list;  done`;
 `awk -F\"\:\" \'{print \$2}\' $LDo\/$chr\_unlinked.pos | while read -r POS; do zcat $outputfolder\/$chr\.mafs | awk -v pop=\$POS -v OFS=\"\\t\" '\$2 == pop {print \$1,\$2,\$3,\$4 ; exit}' >> $LDo\/$chr\_snps.list;  done`;
 `angsd sites index $LDo\/$chr\_snps.list`;
