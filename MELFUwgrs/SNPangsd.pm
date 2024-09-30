@@ -11,12 +11,19 @@ foreach $ar (@arg){
         elsif ($ar=~ /^-rg/){$refgenome=(split(/ /,$ar))[1];}
         elsif ($ar=~ /^-chrf/){$chrf=(split(/ /,$ar))[1];}
         elsif ($ar=~ /^-nind/){$nind=(split(/ /,$ar))[1];}
+        elsif ($ar=~ /^-sxchr/){$sxchr=(split(/ /,$ar))[1];}
+        elsif ($ar=~ /^-mtchr/){$mtchr=(split(/ /,$ar))[1];}
+        elsif ($ar=~ /^-sychr/){$sychr=(split(/ /,$ar))[1];}
+
 }
 
 if (not defined ($inputfolder && $outputfolder && $refgenome)){print "\nThis script will create the ANGSD command to call and genotype SNPs for several samples in parallel, it use a likelihood approach recommended for low coverage genome sequencing. Its need the mapped bam files in a folder,and a indexed reference genome. It is recommended to use  just chromosomes or the biggest scaffolds, so you can use a file with the names of chromosomes or scaffolds to be used, default will use the any contig or scaffold with chr in the name.\n\nUsage:\nMELFUwgrs -stp snpcalling\n\t-i <input folder with mapped bam files with realigned indels>\n\t-o <output folder to save vcf files>\n\t-rg <reference genome>\n\t-snc <number the cores to be used in parallel, recommend to use the number of Chromosomes, default 20>\n\nExample:\nMELFUwgrs.pl -stp snpcalling -i ./Yuma/indelrealigned/ -o ./Yuma/rawsnp/ -rg ./Yuma/genome/reference_genome.fasta -snc 23 -chrf\n\n"; exit;}
 $snc //= 20;
 $chrf //= "N";
 $nind //= 0.8;
+$sxchr //= "SEXCHROM";
+$sychr //= "SEYCHROM";
+$mtchr //= "MITCHROM";
 
 opendir(DIR, "$inputfolder") or die "Can not open folder, $!\n" ;
 our @files = readdir(DIR);
@@ -97,7 +104,8 @@ foreach our $fold ($outputfolder,$pruned){
 `zcat  $fold\/$scaffr[0]\.mafs.gz | head -n 1 | gzip >> $fold\/Somatic.mafs.gz`;
 
 foreach my $chr (@scaffr){
-        next if ($chr =~ m/X/ || $chr =~ m/Y/ || $chr =~ m/MT/);
+#        next if ($chr =~ m/X/ || $chr =~ m/Y/ || $chr =~ m/MT/);
+        next if ($chr eq $sychr || $chr eq sxchr || $chr eq $mtchr);
         `zcat $fold\/$chr\.beagle.gz | tail -n +2 | gzip >> $fold\/Somatic.beagle.gz`;
         `zcat $fold\/$chr\.mafs.gz | tail -n +2 | gzip >> $fold\/Somatic.mafs.gz`;
         `zcat $fold\/$chr\.glf.gz | gzip >> $fold\/Somatic.glf.gz`;
