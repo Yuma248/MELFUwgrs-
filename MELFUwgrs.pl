@@ -16,6 +16,9 @@ while (@ARGV){
 	elsif ($_=~ /^-exf$/){$exf=shift @ARGV;}
 	elsif ($_=~ /^-chrf$/){$chrf=shift @ARGV;}
  	elsif ($_=~ /^-nind$/){$nind=shift @ARGV;}
+  	elsif ($_=~ /^-sxchr$/){$sxchr=shift @ARGV;}
+	elsif ($_=~ /^-sychr$/){$sychr=shift @ARGV;}
+ 	elsif ($_=~ /^-mtchr$/){$mtchr=shift @ARGV;}
 }
 if (not defined ($stp)){print "\nThis pipeline  trim and\/or map reads, and call SNPs/SVs and filter them. The required arguments and inputs depend of the steps you want to perform. You will have to use the option -stpn and select the step you want to run. To check the step names run the script without arguments, if you want to check the arguments for one step just run the script with the specific step but without extra arguments (example MELFUwgrs.pl -stp trim).\n\nUsage:\nMELFUwgrs.pl\n\t-stp <You need at least determine what steps you want to run>\n\t\tindref\: <Indexs the reference genome with samtools, picard, bowtie2 and snap>\n\t\ttrim\: <It will use AdapterRemoval to trim and filter reads>\n\t\tconcat\: <It will concatenate fastq files of the same sample but different runs in one file>\n\t\talignment\: <It will use bowtie2, bwa or snap to align reads to a reference genome>\n\t\tdedup\: <This step will sort sam/bam files, convert sam to bam (if necessary) and mask duplicates>\n\t\tindelrea\: <This step will locally realign indels, although this is not recommended any more>\n\t\tbedmarkrep: <This step will mask repeat regions in the genome>\n\t\tsnpcalling\: <This step will use ANGSD to simultaneously call and genotype SNP, recomede for low coverage (<10X)>\n\t\tsnpcalling2\: <This step will use bcftools to simultaneously call and genotype SNP>\n\t\tfiltering\: <This step will use vcftools to filter SNPs, I recommend to use this automatically to have an idea of your data, but play whit the parameters if you have the time>\n\n"; exit;}
 if (not defined ($stprn)){$stprn = 0};
@@ -115,11 +118,14 @@ foreach $stp (@stptr){
 		if (not defined ($snc)){$snc = 20;}
 		if (not defined ($chrf)){$chrf = "N";}
   		if (not defined ($nind)){$nind = 0.8;}
-	        our @arg = ("-i $input","-o $output","-nc $snc","-rg $reference", "-chrf $chrf", "-nind $nind");
+    		if (not defined ($sxchr)){$sxchr = "SEXCHROM";}
+		if (not defined ($sychr)){$sychr = "SEYCHROM";}
+		if (not defined ($mtchr)){$sxchr = "MITCHROM";}
+	        our @arg = ("-i $input","-o $output","-nc $snc","-rg $reference", "-chrf $chrf", "-nind $nind", "-sxchr $sxchr", "-sychr $sychr", "-mtchr $mtchr");
         	SNPangsd::callSNPs(@arg);
 	        $stprn = 7;
 	}
-  	elsif ($stp eq "snpcalling" or $stprn == 6){
+  	elsif ($stp eq "snpcalling2" or $stprn == 6){
         	use SNPbcf;
 		if (not defined ($inputfolder && $outputfolder && $refgenome)){print "\nThis script will create the bcftools command to call and genotype SNPs for several samples in parallel. It needs the mapped bam files in a folder,and an indexed reference genome. It is recommended to use  just chromosomes or the biggest scaffolds, so you can use a file with the names of chromosomes or scaffolds to be used, default will use the first 24 contig or scaffold in the reference.\n\nUsage:\nMELFUwgrs -stp snpcalling2\n\t-i <input folder with mapped bam files, it will create a bamfilelist with the input unless it exist with in the inputfolder>\n\t-o <output folder to save vcf files>\n\t-rg <reference genome>\n\t-snc <number the cores to be used in parallel, recommend to use the number of Chromosomes, default 24>\n\t-chrf <a file with the list of scaffolds to use, scaffold or chromosomes names as they appear in the reference, one per row. Default N and will use the first 30 scaffold in the reference fasta file>\n\nExample:\nMELFUwgrs.pl -stp snpcalling -i ./Yuma/aligned/ -o ./Yuma/rawsnp/ -rg ./Yuma/genome/reference_genome.fasta -snc 23 -chrf chromosomefile\n\n"; exit;}
 		if (not defined ($snc)){$snc = 20;}
