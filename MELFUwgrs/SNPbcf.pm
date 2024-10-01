@@ -15,7 +15,7 @@ my @arg = @_;
 foreach $ar (@arg){
         if ($ar=~ /^-i/){our $inputfolder= (split(/ /,$ar))[1];}
         elsif ($ar=~ /^-o/){our $outputfolder= (split(/ /,$ar))[1];}
-        elsif ($ar=~ /^-nc/){our $snc=(split(/ /,$ar))[1];}
+        elsif ($ar=~ /^-snc/){our $snc=(split(/ /,$ar))[1];}
         elsif ($ar=~ /^-rg/){$refgenome=(split(/ /,$ar))[1];}
         elsif ($ar=~ /^-chrf/){$chrf=(split(/ /,$ar))[1];}
 }
