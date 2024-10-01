@@ -121,7 +121,7 @@ foreach $stp (@stptr){
     		if (not defined ($sxchr)){$sxchr = "SEXCHROM";}
 		if (not defined ($sychr)){$sychr = "SEYCHROM";}
 		if (not defined ($mtchr)){$sxchr = "MITCHROM";}
-	        our @arg = ("-i $input","-o $output","-nc $snc","-rg $reference", "-chrf $chrf", "-nind $nind", "-sxchr $sxchr", "-sychr $sychr", "-mtchr $mtchr");
+	        our @arg = ("-i $input","-o $output","-snc $snc","-rg $reference", "-chrf $chrf", "-nind $nind", "-sxchr $sxchr", "-sychr $sychr", "-mtchr $mtchr");
         	SNPangsd::callSNPs(@arg);
 	        $stprn = 7;
 	}
@@ -130,7 +130,7 @@ foreach $stp (@stptr){
 		if (not defined ($inputfolder && $outputfolder && $refgenome)){print "\nThis script will create the bcftools command to call and genotype SNPs for several samples in parallel. It needs the mapped bam files in a folder,and an indexed reference genome. It is recommended to use  just chromosomes or the biggest scaffolds, so you can use a file with the names of chromosomes or scaffolds to be used, default will use the first 24 contig or scaffold in the reference.\n\nUsage:\nMELFUwgrs -stp snpcalling2\n\t-i <input folder with mapped bam files, it will create a bamfilelist with the input unless it exist with in the inputfolder>\n\t-o <output folder to save vcf files>\n\t-rg <reference genome>\n\t-snc <number the cores to be used in parallel, recommend to use the number of Chromosomes, default 24>\n\t-chrf <a file with the list of scaffolds to use, scaffold or chromosomes names as they appear in the reference, one per row. Default N and will use the first 30 scaffold in the reference fasta file>\n\nExample:\nMELFUwgrs.pl -stp snpcalling -i ./Yuma/aligned/ -o ./Yuma/rawsnp/ -rg ./Yuma/genome/reference_genome.fasta -snc 23 -chrf chromosomefile\n\n"; exit;}
 		if (not defined ($snc)){$snc = 20;}
 		if (not defined ($chrf)){$chrf = "N";}
-  		our @arg = ("-i $input","-o $output","-nc $snc","-rg $reference", "-chrf $chrf");
+  		our @arg = ("-i $input","-o $output","-snc $snc","-rg $reference", "-chrf $chrf");
         	SNPbcf::callSNPs2(@arg);
 	        $stprn = 7;
 	}
