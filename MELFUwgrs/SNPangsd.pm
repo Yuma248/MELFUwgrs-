@@ -105,7 +105,7 @@ foreach our $fold ($outputfolder,$pruned){
 
 foreach my $chr (@scaffr){
 #        next if ($chr =~ m/X/ || $chr =~ m/Y/ || $chr =~ m/MT/);
-        next if ($chr eq $sychr || $chr eq sxchr || $chr eq $mtchr);
+        next if ($chr eq $sychr || $chr eq $sxchr || $chr eq $mtchr);
         `zcat $fold\/$chr\.beagle.gz | tail -n +2 | gzip >> $fold\/Somatic.beagle.gz`;
         `zcat $fold\/$chr\.mafs.gz | tail -n +2 | gzip >> $fold\/Somatic.mafs.gz`;
         `zcat $fold\/$chr\.glf.gz | gzip >> $fold\/Somatic.glf.gz`;
