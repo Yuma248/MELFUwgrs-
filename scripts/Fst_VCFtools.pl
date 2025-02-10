@@ -9,7 +9,7 @@ elsif ($_=~ /^-pm$/){$popmap=shift @ARGV;}
 elsif ($_=~ /^-of$/){$output=shift @ARGV;}
 elsif ($_=~ /^-nc$/){$nc=shift @ARGV;}
 }
-if (not defined ($input && $popmap)){print "\nThis script calcualate pairwise Fst and population specific Fst first per SNP  and then create a table with global values, it uses vcftools for the calculations.\n\nUsage:\nFstVCFtools.pl\n\t-if <path to a vcf input file>\n\t-pm <path to a popmap file, tabdelimted two columns, <ID> <pop>>\nOptional:\n\t-of <path to output folder, deafult ./outputFst>\n\t-nc <number of cores to run in parallel, deaful 5>\n\nFor example:\n\nFst_VCFtools.pl -if /ANGSD/pruned -of /SomaticFST/ -pm /lineages/popmap -nc 58\n\n"; exit;}
+if (not defined ($input && $popmap)){print "\nThis script calcualate pairwise Fst and population specific Fst, first it calculate the per SNP and then create a table with global values, it uses vcftools for the calculations. It require a VCF input file and popmap file indicating de different populations or groups.\n\nUsage:\nFstVCFtools.pl\n\t-if <path to a vcf input file>\n\t-pm <path to a popmap file, tabdelimted two columns, <ID> <pop>>\nOptional:\n\t-of <path to output folder, deafult ./outputFst>\n\t-nc <number of cores to run in parallel, deaful 5>\n\nFor example:\n\nFst_VCFtools.pl -if /ANGSD/pruned -of /SomaticFST/ -pm /lineages/popmap -nc 58\n\n"; exit;}
 $output //= "./outputFst/";
 mkdir $output unless -d $output;
 $nc //= 5;
