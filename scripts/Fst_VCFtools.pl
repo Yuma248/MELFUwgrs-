@@ -1,4 +1,6 @@
+#!/usr/bin/perl -w
 
+use Parallel::Loops;
 
 while (@ARGV){
 $_=shift @ARGV;
@@ -45,7 +47,7 @@ for my $ipop (0 .. $#mypops - 1){
 		push @pairpops, "${mypops[$ipop]}_${mypops[$jpop]}";
 	}
 }
-use Parallel::Loops;
+
 my $plraw = Parallel::Loops->new($nc);
 $plraw->foreach (\@pairpops, sub{
 	my $pair= $_ ;
