@@ -82,7 +82,9 @@ MELFUwgrs.pl
                 bedmarkrep: <This step will mask repeat regions in the genome> 
                 
                 snpcalling: <This step will use ANGSD to simultaneously call and genotype SNP> 
-                
+
+                snpcalling2: <This step will use BCFTOOLS to simultaneously call and genotype SNP>
+
                 filtering: <This step will use vcftools to filter SNPs, I recommend using this automatically to have an idea of your data, but play with the parameters if you have the time> 
                 
 # Scripts
