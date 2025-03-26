@@ -56,7 +56,9 @@ our @scaffr=`grep \">\" $refgenome | head -n 30 | perl -p -e \'s/>//\' | perl -p
 our @scaffr=`cat $chrf`;
 }
 chomp @scaffr;
-$NS=scalar(@samplesnames);
+##$NS=scalar(@samplesnames);
+$NS=`wc -l $bamlist | awk '{print $1}'`;
+chomp $NS;
 $tind=int(($NS * $nind) + 0.5);
 $cmd1="parallel -j $snc angsd -r {1} -b $bamlist -ref $refgenome -out $outputfolder\/{1} -GL 2 -doMajorMinor 1 -minMapQ 20 -minQ 20 -doMaf 1 -doBCF 1 -SNP_pval 1e-6 -doCounts 1 -minMaf 0.03 -doGeno 3 -doGlf 2 -uniqueonly 1 -remove_bads 1 -only_proper_pairs 0 -C 50 -baq 1 -doPost 1 -postCutoff 0.9 -geno_minDepth 3 -geno_maxDepth 1000 -nThreads 3 -minInd $tind ::: @scaffr";
 ##$cmd1="parallel -j $snc angsd -r {1} -b $bamlist -ref $refgenome -out $outputfolder\/{1} -GL 2 -doMajorMinor 1 -minMapQ 20 -minQ 20 -doMaf 1 -doBCF 1 -SNP_pval 1e-6 -doCounts 1 -minMaf 0.03 -doGeno 3 -doGlf 2 -uniqueonly 1 -remove_bads 1 -only_proper_pairs 0 -C 50 -baq 1 -doPost 1 -postCutoff 0.9 -geno_minDepth 3 -geno_maxDepth 1000 -nThreads 3 -minInd 17 ::: @scaffr";
@@ -84,7 +86,8 @@ $SNPN=`zcat $outputfolder\/$chr\.pos.gz | wc -l`;
 
 chomp $SNPN;
 print "$SNPN\n";
-$NS=scalar(@samplesnames);
+#$NS=scalar(@samplesnames);
+$NS=`wc -l $bamlist | awk '{print $1}'`;
 `ngsLD --geno $outputfolder\/$chr\_Y.beagle.gz --pos $outputfolder\/$chr\.pos.gz --probs --n_ind $NS --n_sites $SNPN --max_kb_dist 50 --n_threads 3 --out $LDo\/$chr\.ld `;
 $CHRNSNP{$chr}=$SNPN;
 ##For old version of ngsLD with not headers in the ld files
