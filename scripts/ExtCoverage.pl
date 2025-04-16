@@ -9,7 +9,7 @@ while (@ARGV){
 	elsif($_=~ /^-cn$/){$cn=shift @ARGV;}
 
 }
-if (not defined ($input)){print "\nThis pipeline calculate the depth coverage per site per sample. The required arguments are a input folder with sam or bam files.\n\nUsage:\nExtCoverage.pl\n\t-i <path to input folder with sam or bam files>\n\t-o <path to ouput folder to save results>\n\t-lnc <runs in parallel, defaul 10>\n\t-cl <list with scaffolds to consider, recomnet the largest and the closest to chromosome level>\n\t-cn <number of scaffolds or chromosome to consider if -cl is not defined, defaul 24>\n\nExample:\nExtDepth.pl -i /my/mapped/samples/ -o /my/mapped/depth/ -lnc 60 -cn 24"; exit;}
+if (not defined ($input)){print "\nThis pipeline calculates the depth coverage per site per sample. The required arguments are an input folder containing sam or bam files.\n\nUsage:\nExtCoverage.pl\n\t-i <Path to input folder with SAM or BAM files>\n\t-o <Path to ouput folder to save results>\n\t-lnc <Number of parallel jobs to run, default 10>\n\t-cl <File with list of scaffolds to consider; recommended: largest and closest to chromosome level>\n\t-cn <Number of scaffolds or chromosome to consider if -cl is not defined, default 24>\n\nExample:\nExtCoverage.pl -i /my/mapped/samples/ -o /my/mapped/depth/ -lnc 60 -cn 24"; exit;}
 $output //= "./coverage/";
 $lnc //= 10;
 $cn //= 24;
