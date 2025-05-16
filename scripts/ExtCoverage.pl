@@ -38,3 +38,4 @@ else {
 	`for i in \$(ls $output\/*coverage); do samp=\$(basename "\$i"); cat $cl | while read l; do awk -v sca=\$l '\$1==sca' \$i >> $chrdir\/\$samp; done; done`;
 	`for i in \$(ls $chrdir\/*.coverage); do samp=\$(basename "\$i"); echo -n \$samp >> $chrdir\/AverageCoverage; awk 'BEGIN{sum=0; chr=0} {if (NR>1) {sum += \$7; chr++}} END{print "\t"sum/chr}' \$i >> $chrdir\/AverageCoverage; done`;
 	`plot_coverage.R $chrdir $cn`;
+}
