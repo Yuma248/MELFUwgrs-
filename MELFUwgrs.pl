@@ -56,7 +56,7 @@ foreach $stp (@stptr){
 		if (not defined ($snc)){$snc =10;}
 		if (not defined ($type)){$type = "RA";}
 		if (not defined ($exf)){$exf ="P1_L001_";}
-        	our @arg = ("-i $input","-o $output","-nc $snc","-exf $exf","-t $type");
+        	our @arg = ("-i $input","-o $output","-snc $snc","-exf $exf","-t $type");
 	       concat::coca(@arg);
         	$stprn = 2;
 	}
