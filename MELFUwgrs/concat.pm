@@ -12,8 +12,6 @@ foreach $ar (@arg){
 }
 use File::Path qw( make_path );
 if (not defined ($inputfolder && $outputfolder)){print "\nThis script will concatenate fastq files of raw or trimmed reads of several samples in parallel. It requires fastq files of all samples stored in the same folder\n\nUsage:\nConcat.pl\n\t-i <path to the folder with the input fastq files>\n\t-o <path to the output folder>\n Optional:\n\t-snc <number of runs in parallel, default 10>\n\t-t <method used for trimming. Trimmomatic TR, AdapterRemoval AR or None NO if are raw sequences, default AR>\n\t-exf <this will tell the script how to extract the name of each sample, and should include all extra information at the end of the file names that is not related to the sample name, default P1_L001_. >\n\nFor example:\nconcat.pl -i /home/Yumafan/demultiplex/trimmed/ -o /home/Yumafan/concatenated-snc 10 -t AR -exf P1_L001_,\n\n"; exit;}
-
-
 if ( !-d $outputfolder ) {
 	make_path $outputfolder or die "Failed to create path: $outputfolder";
 }
@@ -22,7 +20,6 @@ if ( !-d $tmpdir ) {
         `mkdir $tmpdir`;
 }
 if (not defined ($snc)){$snc =10;}
-
 if ($type eq "AR"){
         our $code =$exf.".collapsed.gz";
         my @names = `ls $inputfolder\/*$code`;
@@ -43,16 +40,28 @@ elsif ($type eq "TR"){
 }
 elsif ($type eq "NO"){
 	our @exts = split(/,/, $exf);
-        my $code = $exts[0];
-        my @names = `ls $inputfolder\/\*$code`;
-        foreach $name (@names) {chomp $name; $name=~ s/$inputfolder\///g; $name=~ s/$code//g; push (@nms, $name);}
+    my $code = $exts[0];
+    #my @names = `ls $inputfolder\/\*$code`;
+	my @name = `ls $inputfolder\/`;
+    foreach $name (@names) {chomp $name; $name=~ s/$inputfolder\///g; $name=~ s/$code//g; push (@nms, $name);
+	       @R1= `ls $inputfolder\/$name\/${name}*$exts[0]`;
+		   if (scalar(@array) > 1) { push @tocon, $name;}
+	 	   elsif (scalar(@array) == 1) {push @totrans, $name;}
+	       $onamef = "$outputfolder\/$name\/";
+           if ( !-d $onamef ) {
+                    make_path $onamaf or die "Failed to create path: $onamef";
+                    }
+           }
 	foreach $ef ( @exts){
-                my $cmd = "parallel -j $snc --results $tmpdir --tmp $tmpdir zcat $inputfolder\/{1}$ef | gzip \'>>\' $outputfolder/{1}\.$ef\fq.gz ::: @nms";
-                print "$cmd\n";
-                `parallel -j $snc --results $tmpdir --tmp $tmpdir zcat $inputfolder\/{1}$ef'|\' gzip \'>\'\'>\' $outputfolder/{1}\.$ef\.fq.gz ::: @nms`
-                }
+           my $cmd = "parallel -j $snc --results $tmpdir --tmp $tmpdir zcat $inputfolder\/{1}/{1}*$ef | gzip \'>>\' $outputfolder/{1}$ef ::: @tocon";
+           print "$cmd\n";
+           #`parallel -j $snc --results $tmpdir --tmp $tmpdir zcat $inputfolder\/{1}/{1}*$ef \'|\' gzip \'>\'\'>\' $outputfolder/{1}$ef ::: @tocon`;
+           my $cmd2 = "parallel -j $snc --results $tmpdir --tmp $tmpdir mv $inputfolder\/{1}/{1}*$ef $outputfolder/{1}/{1}$ef ::: @totrans";
+		   print "$cmd2\n";
+	       `parallel -j $snc --results $tmpdir --tmp $tmpdir mv $inputfolder\/{1}/{1}*$ef $outputfolder/{1}/{1}$ef ::: @totrans`;
+			}
 }
-else {print "You have to select a correct type of file, check the instrcutions\n"}
+else {print "You have to select a correct type of file, check the instructions\n"}
 
 
 } 
