@@ -47,9 +47,10 @@ elsif ($type eq "NO"){
 	       @R1= `ls $inputfolder\/$name\/${name}*$exts[0]`;
 		   if (scalar(@array) > 1) { push @tocon, $name;}
 	 	   elsif (scalar(@array) == 1) {push @totrans, $name;}
-	       $onamef = "$outputfolder\/$name\/";
+	       my $onamef = "$outputfolder\/$name\/";
+		   $onamef =~ s/\/\//\//g;
            if ( !-d $onamef ) {
-                    make_path $onamaf or die "Failed to create path: $onamef";
+                    make_path $onamef or die "Failed to create path: $onamef";
                     }
            }
 	foreach $ef ( @exts){
