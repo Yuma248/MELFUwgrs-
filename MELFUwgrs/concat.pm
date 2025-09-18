@@ -53,12 +53,12 @@ elsif ($type eq "NO"){
                     }
            }
 	foreach $ef ( @exts){
-           my $cmd = "parallel -j $snc --results $tmpdir --tmp $tmpdir zcat $inputfolder\/{1}/{1}*$ef | gzip \'>>\' $outputfolder/{1}$ef ::: @tocon";
+           my $cmd = "parallel -j $snc --results $tmpdir --tmpdir $tmpdir zcat $inputfolder\/{1}/{1}*$ef | gzip \'>>\' $outputfolder/{1}$ef ::: @tocon";
            print "$cmd\n";
-           #`parallel -j $snc --results $tmpdir --tmp $tmpdir zcat $inputfolder\/{1}/{1}*$ef \'|\' gzip \'>\'\'>\' $outputfolder/{1}$ef ::: @tocon`;
-           my $cmd2 = "parallel -j $snc --results $tmpdir --tmp $tmpdir mv $inputfolder\/{1}/{1}*$ef $outputfolder/{1}/{1}$ef ::: @totrans";
+           `parallel -j $snc --results $tmpdir --tmpdir $tmpdir zcat $inputfolder\/{1}/{1}*$ef \'|\' gzip \'>\'\'>\' $outputfolder/{1}$ef ::: @tocon`;
+           my $cmd2 = "parallel -j $snc --results $tmpdir --tmpdir $tmpdir mv $inputfolder\/{1}/{1}*$ef $outputfolder/{1}/{1}$ef ::: @totrans";
 		   print "$cmd2\n";
-	       `parallel -j $snc --results $tmpdir --tmp $tmpdir mv $inputfolder\/{1}/{1}*$ef $outputfolder/{1}/{1}$ef ::: @totrans`;
+	       `parallel -j $snc --results $tmpdir --tmpdir $tmpdir mv $inputfolder\/{1}/{1}*$ef $outputfolder/{1}/{1}$ef ::: @totrans`;
 			}
 }
 else {print "You have to select a correct type of file, check the instructions\n"}
