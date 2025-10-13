@@ -49,6 +49,9 @@ if ( !-e $bamlist){
 foreach $samplename (@samplesnames){
 `echo "$inputfolder\/$samplename\.bam " >> $bamlist`;
 }
+}else {
+   @samplesnames=`awk -F'/' '{print $NF}' $inputfolder/bamlist`;
+   chomp(@samplesnames);
 }
 if ($chrf eq "N"){
 our @scaffr=`grep \">\" $refgenome | head -n 30 | perl -p -e \'s/>//\' | perl -p -e \'s/\\s\.*\\n/\\n/\'`;
