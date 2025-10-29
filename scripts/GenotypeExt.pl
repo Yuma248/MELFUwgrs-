@@ -20,7 +20,9 @@ $mtchr //= "MITCHROM";
 
 $LDo //= $inputfolder;
 $fold //= $outputfolder;
-
+if ( !-d $outputfolder ) {
+    make_path $outputfolder or die "Failed to create path: $outputfolder";
+}
 if (-e $bamlist){
     @samplesnames=`awk -F'/' '{print $NF}' $bamlist`;
    chomp(@samplesnames);
