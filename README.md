@@ -1,3 +1,6 @@
+![Visitors](https://hitscounter.dev/api/hit?url=https%3A%2F%2Fgithub.com%2FYuma248%2FMELFUwrs-%2F&label=Visitors&icon=github&color=%233d8bfd&message=&style=flat&tz=Universal)
+
+
 # MELFUwgrs!
 Pipeline to call snps on whole genome resequencing data.
 
