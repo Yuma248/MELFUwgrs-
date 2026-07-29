@@ -186,3 +186,27 @@ Example:
 
 SWHet.py -v input.vcf.gz -c Chromolenght -w 100000 -s 10000
 
+## beagle2vcf
+This script takes a Beagle and MAF file from ANGSD, plus a sample file with the names of the samples, and creates a VCF file with the most likely genotypes (threshold 0.9).
+usage: beagle2vcfY.py [-h] [-b BEAGLE] [-m MAFS] [-s SAMPLES] [-o OUT] [-p MINPROB]
+
+Argument:
+
+        -h, --help  Show this help message and exit
+  
+        -b BEAGLE, --beagle BEAGLE ANGSD beagle file with header
+  
+        -m MAFS, --mafs MAFS ANGSD maf file
+  
+        -s SAMPLES, --samples SAMPLES Sample names file
+
+        -o OUT, --out OUT Output VCF
+  
+        -p MINPROB, --minprob MINPROB  Min probability, default 0.9
+
+Example:
+
+beagle2vcfY.py -b Somatic.beagle.gz -m Somatic.mafs.gz -s WGsamples -o Somatic.vcf -p 0.95
+
+
+
