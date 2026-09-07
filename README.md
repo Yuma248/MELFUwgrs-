@@ -7,7 +7,7 @@ Pipeline to call snps on whole genome resequencing data.
 # Download
         git clone https://github.com/Yuma248/MELFUwgrs-.git
   
-# Dependecies 
+# Dependencies 
 
 Perl Parallel:::Loops
 
